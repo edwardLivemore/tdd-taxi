@@ -2,6 +2,11 @@ package com.jiker.keju;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
+import java.io.FileNotFoundException;
+
 import org.junit.Test;
 
 public class TaxiReceiptTest {
@@ -54,16 +59,11 @@ public class TaxiReceiptTest {
         assertNotNull(taxiReceipt.getReceipt());
     }
 
-    // @Test
-    // public void filePath_test(){
-    //     String fileName = "testData.txt";
-    //     String filePath = "src/main/resources/testData.txt";
-    //     taxiReceipt = new TaxiReceipt();
-    //     try {
-    //         taxiReceipt.run(fileName);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     assertNotNull(taxiReceipt.getReceipt());
-    // }
+    @Test
+    public void file_not_found_test(){
+        taxiReceipt = new TaxiReceipt();
+        String fileName = "testData111.txt";
+        Throwable exception = assertThrows(FileNotFoundException.class, () -> {taxiReceipt.run(fileName);});
+        assertTrue(exception.getMessage().contains("testData111.txt"));
+    }
 }
